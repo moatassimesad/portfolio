@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9b8dbd57-d067-445a-9ca3-cac75faa36e0" name="snesia">
+        <fileTransfer accessType="SFTP" host="57.129.7.240" port="22" sshConfigId="6063e2ed-a5c7-4b76-b8fd-5de78c41d612" sshConfig="root@57.129.7.240:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
