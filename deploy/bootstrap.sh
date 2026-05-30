@@ -28,8 +28,18 @@ server {
     root $ROOT;
     index index.html;
 
+    # Serve the homepage and any real files (resume.pdf, /assets/...);
+    # anything else redirects to the site root.
+    location = / {
+        try_files /index.html =404;
+    }
+
     location / {
-        try_files \$uri \$uri/ =404;
+        try_files \$uri \$uri/ @redirect_home;
+    }
+
+    location @redirect_home {
+        return 302 /;
     }
 }
 EOF
