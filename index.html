@@ -547,6 +547,8 @@ section { position: relative; }
   margin-top: clamp(2rem,5vw,3rem);
   position: relative;
 }
+/* Modest invisible hit-area padding so the moving link stays easy to click */
+.contact .mail::before { content: ""; position: absolute; left: -2.5em; right: -2.5em; top: -1.2em; bottom: -1.2em; }
 .contact .mail::after { content: ""; position: absolute; left: 0; bottom: 0.05em; height: 2px; width: 100%; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease); }
 .contact .mail:hover::after { transform: scaleX(1); transform-origin: left; }
 .contact .mail:hover { color: var(--accent); }
@@ -913,7 +915,7 @@ section { position: relative; }
   <span class="eyebrow" data-fade>Contact</span>
   <h2 data-words>Let's build<br>something <em>real</em></h2>
   <p class="contact-sub" data-fade>Open to senior full-stack roles and freelance work. Fast, reliable, real-time — let's make it.</p>
-  <a href="mailto:saad@moatassime.com" class="mail" data-magnetic data-cursor data-fade>saad@moatassime.com</a>
+  <a href="mailto:saad@moatassime.com" class="mail" data-magnetic-wide data-cursor data-fade>saad@moatassime.com</a>
 </section>
 
 </main>
@@ -1195,6 +1197,38 @@ section { position: relative; }
         gsap.to(el, { x: mx * 0.3, y: my * 0.4, duration: 0.4, ease: "power2.out" });
       });
       el.addEventListener("mouseleave", function () { gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1,0.4)" }); });
+    });
+
+    /* Wide-radius magnetic: pulls toward the cursor across a large zone
+       around the element, not only while hovering it directly. */
+    document.querySelectorAll("[data-magnetic-wide]").forEach(function (el) {
+      var ZONE = 340;             // half-extent of the rectangular zone around the element edges
+      var active = false;
+      function onMove(e) {
+        // resting rect (subtract current GSAP transform offset to avoid drift)
+        var r = el.getBoundingClientRect();
+        var ox = gsap.getProperty(el, "x") || 0;
+        var oy = gsap.getProperty(el, "y") || 0;
+        var left = r.left - ox, top = r.top - oy;
+        var cx = left + r.width / 2;
+        var cy = top + r.height / 2;
+        // distance from the element's BOX (0 when inside), so wide text still gets a balanced zone
+        var ddx = Math.max(left - e.clientX, 0, e.clientX - (left + r.width));
+        var ddy = Math.max(top - e.clientY, 0, e.clientY - (top + r.height));
+        var edgeDist = Math.hypot(ddx, ddy);
+        if (edgeDist < ZONE) {
+          active = true;
+          var dx = e.clientX - cx;
+          var dy = e.clientY - cy;
+          // near-full follow: text chases the cursor closely, only easing off at the very edge
+          var pull = Math.min(1, 1.15 * (1 - edgeDist / ZONE) + 0.15);
+          gsap.to(el, { x: dx * pull, y: dy * pull, duration: 0.3, ease: "power3.out" });
+        } else if (active) {
+          active = false;
+          gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1,0.4)" });
+        }
+      }
+      window.addEventListener("mousemove", onMove);
     });
   }
 
