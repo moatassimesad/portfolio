@@ -317,6 +317,7 @@ h1, h2, h3 {
   display: inline-flex; align-items: center; gap: 0.7rem;
   padding: var(--pad);
   border-radius: 100px;
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 0.78rem; letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -592,8 +593,16 @@ section { position: relative; }
 }
 @media (max-width: 460px) {
   .stats { grid-template-columns: 1fr 1fr; }
-  .hero-cta { width: 100%; }
-  .hero-cta .btn { flex: 1; justify-content: center; }
+  /* Stack the hero buttons vertically so text never wraps or squishes */
+  .hero-cta { width: 100%; flex-direction: column; flex-wrap: nowrap; gap: 0.7rem; }
+  .hero-cta .btn {
+    width: 100%;
+    flex: none;
+    justify-content: center;
+    white-space: nowrap;
+    --pad: 0.95rem 1.5rem;
+    font-size: 0.74rem;
+  }
 }
 
 /* ============================================================
