@@ -491,6 +491,7 @@ section { position: relative; }
 
 /* mobile experience = vertical stack */
 .exp-mobile { display: none; }
+.exp-intro-m { display: none; }
 
 /* ============================================================
    SKILLS
@@ -590,6 +591,12 @@ section { position: relative; }
   .exp-mobile { display: grid; gap: 1.2rem; padding-top: 1rem; }
   .exp-mobile .exp-panel { width: 100%; height: auto; }
   .exp-mobile .exp-panel ul { margin-top: 1.5rem; }
+  /* Show the "Things I've built" intro on mobile */
+  .exp-intro-m { display: block; margin-bottom: 0.6rem; }
+  .exp-intro-m h2 { font-size: clamp(2.4rem, 11vw, 3.4rem); text-transform: uppercase; line-height: 1; margin-top: 1.2rem; }
+  .exp-intro-m p { color: var(--cream-dim); margin-top: 1.2rem; max-width: 34ch; }
+  /* More breathing room under the stat labels on mobile */
+  .stat { padding-top: 2.4rem; padding-bottom: 2.4rem; }
 }
 @media (max-width: 460px) {
   .stats { grid-template-columns: 1fr 1fr; }
@@ -808,6 +815,11 @@ section { position: relative; }
 
     <!-- mobile stack -->
     <div class="exp-mobile wrap">
+      <div class="exp-intro-m">
+        <span class="eyebrow">02 — Selected Work</span>
+        <h2>Things I've built</h2>
+        <p>Four production platforms across automation, e-commerce ops, and high-scale media.</p>
+      </div>
       <a href="https://v2.egrow.com" target="_blank" rel="noopener" class="exp-panel"><span class="pn">Jun 2025 — Present · Current</span><h3>Full Stack Developer <span class="co">eGrow Automations</span></h3><span class="role-loc">↗ v2.egrow.com · Marrakech</span><ul><li>Zapier-style visual automation builder — triggers, conditions, actions, loops.</li><li>Pluggable integration system; new services without core changes.</li><li>Laravel 12 API + Nuxt 4 no-code UI on a scalable engine.</li><li>Redis + Horizon running thousands of concurrent jobs.</li></ul><div class="chips"><span class="chip">Nuxt 4</span><span class="chip">Laravel 12</span><span class="chip">Redis</span><span class="chip">Horizon</span></div></a>
       <a href="https://app.egrow.com" target="_blank" rel="noopener" class="exp-panel"><span class="pn">Oct 2023 — Present · Current</span><h3>Full Stack Developer <span class="co">eGrow</span></h3><span class="role-loc">↗ app.egrow.com · Marrakech</span><ul><li>All-in-one e-commerce ops platform.</li><li>Automated carrier insertion + real-time tracking.</li><li>Unified inbox: WhatsApp, IG, Messenger, TikTok, email.</li><li>WebSockets syncing orders, chats &amp; stock.</li></ul><div class="chips"><span class="chip">Nuxt 4</span><span class="chip">GraphQL</span><span class="chip">WebSockets</span></div></a>
       <a href="https://beloud.com" target="_blank" rel="noopener" class="exp-panel"><span class="pn">Sep 2022 — Sep 2023 · Beloud</span><h3>Full Stack Developer <span class="co">Beloud</span></h3><span class="role-loc">↗ beloud.com · Marrakech</span><ul><li>Full-stack social news platform (Nuxt.js + Laravel).</li><li>AI content suggestions &amp; personalization.</li><li>Live comments, messaging &amp; alerts via WebSockets.</li><li>Web &amp; mobile push notifications.</li></ul><div class="chips"><span class="chip">Nuxt.js</span><span class="chip">Laravel</span><span class="chip">AI</span></div></a>
