@@ -592,11 +592,11 @@ section { position: relative; }
   .exp-mobile .exp-panel { width: 100%; height: auto; }
   .exp-mobile .exp-panel ul { margin-top: 1.5rem; }
   /* Show the "Things I've built" intro on mobile */
-  .exp-intro-m { display: block; margin-bottom: 0.6rem; }
+  .exp-intro-m { display: block; }
   .exp-intro-m h2 { font-size: clamp(2.4rem, 11vw, 3.4rem); text-transform: uppercase; line-height: 1; margin-top: 1.2rem; }
   .exp-intro-m p { color: var(--cream-dim); margin-top: 1.2rem; max-width: 34ch; }
-  /* More breathing room under the stat labels on mobile */
-  .stat { padding-top: 2.4rem; padding-bottom: 2.4rem; }
+  /* Extra bottom padding under the counters on mobile */
+  .stat { padding-bottom: 3rem; }
 }
 @media (max-width: 460px) {
   .stats { grid-template-columns: 1fr 1fr; }
