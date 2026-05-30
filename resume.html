@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moatassime Saad | Senior Full Stack Developer</title>
+<style>
+  :root{
+    --ink:#1a1d24;
+    --muted:#5b6470;
+    --accent:#1f3a8a;
+    --line:#d8dde5;
+    --chip-bg:#eef2fb;
+    --chip-ink:#1f3a8a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    font-family:"Inter","Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    font-size:10.6px;
+    line-height:1.45;
+    background:#fff;
+  }
+  .page{
+    max-width:820px;
+    margin:0 auto;
+    padding:32px 42px 32px;
+  }
+
+  /* Header */
+  header{ display:flex; align-items:center; gap:22px; padding-bottom:14px; border-bottom:2.5px solid var(--accent); }
+  .photo{ width:96px; height:96px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2.5px solid var(--accent); }
+  .head-text{ flex:1; text-align:left; }
+  h1{ font-size:25px; letter-spacing:2.5px; font-weight:800; color:var(--ink); }
+  .headline{ font-size:11.5px; letter-spacing:3px; font-weight:600; color:var(--accent); text-transform:uppercase; margin-top:4px; }
+  .contact{ margin-top:9px; font-size:9.6px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 14px; }
+  .contact a{ color:var(--muted); text-decoration:none; }
+  .contact .sep{ color:var(--line); }
+
+  /* Sections */
+  section{ margin-top:15px; }
+  h2{
+    font-size:10.6px; letter-spacing:1.8px; text-transform:uppercase; color:var(--accent);
+    font-weight:700; padding-bottom:2.5px; margin-bottom:6px; border-bottom:1px solid var(--line);
+  }
+  p.summary{ color:#2c3440; text-align:justify; }
+
+  /* Experience / entries */
+  .entry{ margin-bottom:11px; break-inside:avoid; }
+  .entry:last-child{ margin-bottom:0; }
+  .entry-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .entry-title{ font-weight:700; font-size:10.8px; color:var(--ink); }
+  .entry-title .co{ font-weight:600; color:var(--accent); }
+  .entry-date{ font-size:9.3px; color:var(--muted); white-space:nowrap; font-weight:600; text-align:right; }
+  .entry-date .site{ display:block; font-weight:600; font-size:8.8px; }
+  .entry-date .site a{ color:var(--accent); text-decoration:none; }
+  ul{ list-style:none; margin-top:3px; }
+  ul li{ position:relative; padding-left:12px; margin-bottom:2px; color:#2c3440; }
+  ul li::before{ content:"▪"; position:absolute; left:0; color:var(--accent); font-size:8px; top:1px; }
+  .tech{ margin-top:3px; display:flex; flex-wrap:wrap; gap:4px; }
+  .chip{ background:var(--chip-bg); color:var(--chip-ink); font-size:8.4px; font-weight:600; padding:1.5px 7px; border-radius:9px; }
+
+  /* Two-column grid for compact sections */
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:4px 28px; }
+  .edu .entry-head{ align-items:baseline; }
+  .edu .sub{ color:var(--muted); font-size:9.4px; }
+
+  /* Skills */
+  .skill-row{ display:flex; gap:8px; margin-bottom:3px; }
+  .skill-row .k{ font-weight:700; color:var(--ink); min-width:88px; }
+  .skill-row .v{ color:#2c3440; }
+
+  .languages{ color:#2c3440; }
+  .languages b{ color:var(--ink); }
+
+  .others li{ color:#2c3440; }
+  .others b{ color:var(--ink); }
+
+  .activities{ color:#2c3440; }
+
+  @media print{
+    .page{ padding:22px 34px; max-width:100%; }
+    body{ font-size:10px; }
+  }
+  @page{ margin:0; size:A4; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <img class="photo" src="assets/images/saad.jpg" alt="Moatassime Saad">
+    <div class="head-text">
+      <h1>MOATASSIME SAAD</h1>
+      <div class="headline">Senior Full Stack Developer</div>
+      <div class="contact">
+        <span>+212 6 64 50 10 81</span>
+        <span class="sep">|</span>
+        <a href="mailto:saad@moatassime.com">saad@moatassime.com</a>
+        <span class="sep">|</span>
+        <span>Morocco</span>
+        <span class="sep">|</span>
+        <a href="https://saad.moatassime.com">saad.moatassime.com</a>
+        <span class="sep">|</span>
+        <a href="https://www.linkedin.com/in/saad-moatassime-688853188/">LinkedIn</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p class="summary">Senior Full Stack Developer with 4+ years building and shipping production web applications across the full stack. Strong with modern frontend and backend frameworks (Nuxt, Vue, Laravel) and experienced in REST and GraphQL API design, real-time features, third-party integrations, and database design. Comfortable owning features end to end, from architecture and APIs to UI, on products serving large user bases.</p>
+  </section>
+
+  <section>
+    <h2>Professional Experience</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Full Stack Developer · <span class="co">eGrow Automations</span>, Marrakech</span>
+        <span class="entry-date">Jun 2025 – Present<span class="site"><a href="https://v2.egrow.com">v2.egrow.com</a></span></span>
+      </div>
+      <ul>
+        <li>Engineered a visual, Zapier-style automation builder enabling users to compose unlimited workflows with triggers, conditions, filters, actions, and loops, applicable to any use case across any domain.</li>
+        <li>Built a system for creating integrations by defining their connections, modules, procedures (lists), and webhooks, enabling new third-party services to be added without core changes.</li>
+        <li>Architected the platform with a Laravel 12 REST API and Nuxt 4 frontend, delivering a responsive no-code interface backed by a scalable execution engine.</li>
+        <li>Built a high-throughput background processing system using Redis-backed queues and Laravel Horizon, reliably executing thousands of concurrent automation jobs in real time.</li>
+      </ul>
+      <div class="tech">
+        <span class="chip">Nuxt 4</span><span class="chip">Laravel 12</span><span class="chip">REST API</span><span class="chip">Redis</span><span class="chip">Horizon</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Full Stack Developer · <span class="co">eGrow</span>, Marrakech</span>
+        <span class="entry-date">Oct 2023 – Present<span class="site"><a href="https://app.egrow.com">app.egrow.com</a></span></span>
+      </div>
+      <ul>
+        <li>Built an all-in-one operations platform for e-commerce merchants to manage orders, products, stock, shipping, and end-to-end fulfillment from a single workspace.</li>
+        <li>Developed automated shipping-company order insertion plus real-time parcel-status and order tracking, eliminating manual coordination across carriers.</li>
+        <li>Engineered a shared team inbox unifying WhatsApp, Instagram, Messenger, TikTok, and email, supporting multiple accounts per channel routed into one collaborative inbox.</li>
+        <li>Used WebSockets to keep order status, inbox conversations, and stock in sync across the team in real time.</li>
+      </ul>
+      <div class="tech">
+        <span class="chip">Nuxt 4</span><span class="chip">Laravel 12</span><span class="chip">GraphQL</span><span class="chip">WebSockets</span><span class="chip">Tailwind CSS</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Full Stack Developer · <span class="co">Beloud</span>, SafeApps</span>
+        <span class="entry-date">Sep 2022 – Sep 2023</span>
+      </div>
+      <ul>
+        <li>Built the full stack of a social news platform with Nuxt.js and Laravel, handling architecture, API design, and UI.</li>
+        <li>Integrated AI-based content suggestions and personalization to show users more relevant stories.</li>
+        <li>Added live comments, in-app messaging, and breaking-news alerts using WebSockets.</li>
+        <li>Built push notifications for web and mobile to keep users updated.</li>
+      </ul>
+      <div class="tech">
+        <span class="chip">Nuxt.js</span><span class="chip">Laravel</span><span class="chip">AI Integration</span><span class="chip">WebSockets</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Full Stack Developer · <span class="co">Staff Platform</span>, SafeApps</span>
+        <span class="entry-date">Oct 2021 – Aug 2022</span>
+      </div>
+      <ul>
+        <li>Built the internal staff platform for the "Breaking News" app (50M+ downloads) with Vue.js and Laravel, used to manage app content and user-generated content.</li>
+        <li>Developed moderation tools for reported ads, news, comments, and users, plus a ticketing system for handling user problems.</li>
+        <li>Implemented analytics dashboards and role-based permission controls for the staff team.</li>
+      </ul>
+      <div class="tech">
+        <span class="chip">Vue.js</span><span class="chip">Laravel</span><span class="chip">MySQL</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="edu">
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">B.Sc. in Computer Science, Distributed Computing Systems</span>
+        <span class="entry-date">2017 – 2021</span>
+      </div>
+      <div class="sub">Faculty of Sciences and Techniques, Cadi Ayyad University, Marrakech</div>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Baccalaureate in Physical Sciences</span>
+        <span class="entry-date">2017</span>
+      </div>
+      <div class="sub">Ibn Maja High School, Amizmiz</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills &amp; Tools</h2>
+    <div class="skill-row"><span class="k">Programming</span><span class="v">JavaScript, PHP, HTML, CSS, Node.js, Vue.js, Nuxt.js, Laravel</span></div>
+    <div class="skill-row"><span class="k">Databases</span><span class="v">MySQL</span></div>
+    <div class="skill-row"><span class="k">Tools</span><span class="v">Git, Postman, Zapier, Twilio API, Google APIs</span></div>
+    <div class="skill-row"><span class="k">Practices</span><span class="v">API Integration, GraphQL, WebSockets, CI/CD Basics, Automation Scripting</span></div>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <p class="languages"><b>Arabic</b>: Native &nbsp;|&nbsp; <b>English</b>: Advanced &nbsp;|&nbsp; <b>French</b>: Good comprehension</p>
+  </section>
+
+  <section>
+    <h2>Interests</h2>
+    <p class="languages">Chess, fitness, and exploring the latest AI stuff.</p>
+  </section>
+
+</div>
+</body>
+</html>
