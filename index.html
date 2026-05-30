@@ -573,6 +573,34 @@ section { position: relative; }
 .mm-close { position: absolute; top: 1.5rem; right: var(--gutter); width: 44px; height: 44px; color: var(--cream); }
 .mm-foot { margin-top: 3rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--cream-dim); }
 
+/* Fancy staggered reveal of menu items — fires only after the panel
+   has fully slid open (panel transition is 0.7s). */
+.mobile-menu .mm-item {
+  opacity: 0;
+  transform: translateY(60px) skewY(4deg);
+  filter: blur(6px);
+  transform-origin: left center;
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-menu.open .mm-item {
+  opacity: 1;
+  transform: translateY(0) skewY(0);
+  filter: blur(0);
+}
+/* base delay ~0.45s = start just before the panel finishes opening (0.7s), then stagger */
+.mobile-menu.open .mm-item:nth-child(2) { transition-delay: 0.45s; }
+.mobile-menu.open .mm-item:nth-child(3) { transition-delay: 0.52s; }
+.mobile-menu.open .mm-item:nth-child(4) { transition-delay: 0.59s; }
+.mobile-menu.open .mm-item:nth-child(5) { transition-delay: 0.66s; }
+.mobile-menu.open .mm-item:nth-child(6) { transition-delay: 0.73s; }
+.mobile-menu.open .mm-item:nth-child(7) { transition-delay: 0.82s; }
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu .mm-item { transition: none; transform: none; filter: none; opacity: 1; }
+}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -657,12 +685,12 @@ section { position: relative; }
   <button class="mm-close" id="mmClose" aria-label="Close menu">
     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6L6 18M6 6l12 12"/></svg>
   </button>
-  <a href="#about">About</a>
-  <a href="#work">Work</a>
-  <a href="#skills">Skills</a>
-  <a href="#contact">Contact</a>
-  <a href="resume.pdf" target="_blank" rel="noopener">Resume</a>
-  <div class="mm-foot">saad@moatassime.com<br>+212 6 64 50 10 81</div>
+  <a href="#about" class="mm-item">About</a>
+  <a href="#work" class="mm-item">Work</a>
+  <a href="#skills" class="mm-item">Skills</a>
+  <a href="#contact" class="mm-item">Contact</a>
+  <a href="resume.pdf" target="_blank" rel="noopener" class="mm-item">Resume</a>
+  <div class="mm-foot mm-item">saad@moatassime.com<br>+212 6 64 50 10 81</div>
 </div>
 
 <main id="top">
