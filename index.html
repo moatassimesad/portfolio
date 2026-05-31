@@ -127,7 +127,7 @@ h1, h2, h3 {
 
 /* hero interactive node network */
 .hero-net { position: absolute; top: 0; left: 0; height: 100%; width: 100%; max-width: none; z-index: 1; pointer-events: none; }
-.hero-top, .hero h1, .hero-bottom, .scroll-cue { position: relative; z-index: 2; }
+.hero-meta, .hero-main, .hero-stats, .scroll-cue { position: relative; z-index: 2; }
 
 
 
@@ -200,26 +200,37 @@ h1, h2, h3 {
   background: var(--accent);
   mix-blend-mode: normal;
 }
-.nav-links { display: flex; gap: 2.2rem; }
-.nav-links a {
+.nav-links { display: flex; align-items: center; gap: 2.2rem; }
+/* The link is just a big padded click target; negative margin keeps the
+   visual spacing identical so the layout doesn't move. */
+.nav-links a, .nav-links button {
   font-family: var(--font-mono);
   font-size: 0.74rem; letter-spacing: 0.05em;
   color: #fff;
+  display: inline-block;
+  padding: 0.9rem 0.7rem;
+  margin: -0.9rem -0.7rem;
+}
+/* The roll-up clip + animation are unchanged — just moved onto this inner
+   wrapper instead of the link itself. */
+.nav-links .roll {
   position: relative;
   overflow: hidden;
   height: 1.1em;
   display: inline-block;
+  font-style: normal;
+  vertical-align: bottom;
 }
-.nav-links a span {
+.nav-links .roll span {
   display: block;
   transition: transform 0.45s var(--ease);
 }
-.nav-links a span::after {
+.nav-links .roll span::after {
   content: attr(data-t);
   display: block;
   color: var(--accent);
 }
-.nav-links a:hover span { transform: translateY(-50%); }
+.nav-links a:hover .roll span, .nav-links button:hover .roll span { transform: translateY(-50%); }
 .nav-time {
   font-family: var(--font-mono);
   font-size: 0.74rem;
@@ -235,29 +246,31 @@ h1, h2, h3 {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 7rem;
-  padding-bottom: 4rem;
+  justify-content: space-between;
+  padding-top: 6.5rem;
+  padding-bottom: 3.5rem;
   position: relative;
 }
 /* short / landscape viewports: trim padding so the hero never exceeds one screen */
 @media (max-height: 820px) and (min-width: 761px) {
-  .hero { padding-top: 4rem; padding-bottom: 1.5rem; }
-  .hero h1 { font-size: clamp(3.2rem, min(13.5vw, 16vh), 15rem); }
-  .hero-top { margin-bottom: clamp(0.75rem, 1.5vh, 1.5rem); }
-  .hero-bottom { margin-top: clamp(0.75rem, 2vh, 2rem); }
+  .hero { padding-top: 4.5rem; padding-bottom: 1.5rem; }
+  .hero-name { font-size: clamp(3.2rem, min(15vw, 17vh), 16rem); }
+  .hero-main { padding: 1.5rem 0; }
 }
-.hero-top {
+/* top meta row: availability + location/clock */
+.hero-meta {
   display: flex; justify-content: space-between;
-  align-items: flex-start; flex-wrap: wrap; gap: 1rem;
-  margin-bottom: clamp(1.5rem, 4vw, 3rem);
-}
-.hero-avail {
+  align-items: center; flex-wrap: wrap; gap: 1rem;
   font-family: var(--font-mono); font-size: 0.72rem;
   letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--cream-dim);
+  padding-bottom: clamp(1.5rem, 4vw, 2.75rem);
+  border-bottom: 1px solid var(--line-soft);
+}
+.hero-avail {
   display: inline-flex; align-items: center; gap: 0.6rem;
 }
+.hero-loc { color: var(--cream-mute); }
 /* live signal — real-time waveform visualizer */
 .live-signal {
   display: inline-flex;
@@ -285,32 +298,71 @@ h1, h2, h3 {
   50% { transform: scaleY(1); opacity: 1; }
 }
 
-.hero h1 {
-  font-size: clamp(3.2rem, min(13.5vw, 19vh), 15rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.04em;
+/* ---- Hero main block ---- */
+.hero-main {
+  flex: 1 1 auto;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem) 0 clamp(1.5rem, 3vw, 2.5rem);
 }
-.hero h1 .row { display: block; overflow: hidden; }
-.hero h1 .row .clip { display: block; }
-.hero h1 .ser { font-size: 0.92em; text-transform: none; }
-.hero h1 em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--accent); text-transform: none; letter-spacing: -0.01em; }
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 1vw, 0.82rem);
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: 0.85rem;
+  margin-bottom: clamp(0.75rem, 2vw, 1.4rem);
+}
+.he-bar { width: 34px; height: 1px; background: var(--accent); display: inline-block; }
 
+.hero-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.4rem, min(15vw, 21vh), 16rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+.hero-name .row { display: block; overflow: hidden; }
+.hero-name .row .clip { display: inline-block; }
+.hero-name .name2-row { display: flex; align-items: baseline; overflow: visible; }
+.hero-name .name2-row .clip { overflow: hidden; }
+.hero-name .dot {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 400;
+  color: var(--accent);
+  display: inline-block;
+}
 .char { display: inline-block; will-change: transform; }
 
-.hero-bottom {
+.hero-foot {
   display: flex; justify-content: space-between;
-  align-items: flex-end; flex-wrap: wrap; gap: 2rem;
+  align-items: flex-end; flex-wrap: wrap; gap: clamp(1.5rem, 4vw, 3rem);
   margin-top: clamp(2rem, 5vw, 3.5rem);
 }
 .hero-lead {
-  max-width: 40ch;
+  max-width: 46ch;
   color: var(--cream-dim);
-  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-  line-height: 1.5;
+  font-size: clamp(1.02rem, 1.4vw, 1.22rem);
+  line-height: 1.55;
 }
 .hero-lead b { color: var(--cream); font-weight: 600; }
 .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* bottom stat strip — a spec sheet that grounds the layout */
+.hero-stats {
+  list-style: none; margin: 0; padding: clamp(1.25rem, 3vw, 2rem) 0 0;
+  border-top: 1px solid var(--line-soft);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.hero-stats li { display: flex; flex-direction: column; gap: 0.35rem; }
+.hero-stats b {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  letter-spacing: -0.02em; color: var(--cream); line-height: 1;
+}
+.hero-stats span {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-mute);
+}
 
 .btn {
   --pad: 1.1rem 1.9rem;
@@ -342,8 +394,7 @@ h1, h2, h3 {
 .btn-fill::before { background: var(--cream); }
 
 .scroll-cue {
-  position: absolute; bottom: 1.6rem; left: 50%;
-  transform: translateX(-50%);
+  position: absolute; bottom: 1.6rem; right: var(--gutter);
   font-family: var(--font-mono); font-size: 0.64rem;
   letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--cream-mute);
@@ -568,10 +619,11 @@ section { position: relative; }
 /* ============================================================
    MOBILE MENU
    ============================================================ */
-.mobile-menu { position: fixed; inset: 0; z-index: 1100; background: var(--bg); display: flex; flex-direction: column; justify-content: center; padding: var(--gutter); transform: translateY(-100%); transition: transform 0.7s var(--ease); }
+.mobile-menu { position: fixed; inset: 0; z-index: 1100; background: var(--bg); display: flex; flex-direction: column; justify-content: center; padding: var(--gutter); transform: translateY(-100%); transition: transform 0.7s var(--ease), visibility 0s linear 0.7s; visibility: hidden; pointer-events: none; }
+.mobile-menu.open { visibility: visible; pointer-events: auto; transition: transform 0.7s var(--ease), visibility 0s; }
 .mobile-menu.open { transform: translateY(0); }
-.mobile-menu a { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 11vw, 5rem); text-transform: uppercase; letter-spacing: -0.03em; padding: 0.3rem 0; color: var(--cream); }
-.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu a, .mobile-menu button { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 11vw, 5rem); text-transform: uppercase; letter-spacing: -0.03em; padding: 0.3rem 0; color: var(--cream); text-align: left; }
+.mobile-menu a:hover, .mobile-menu button:hover { color: var(--accent); }
 .mm-close { position: absolute; top: 1.5rem; right: var(--gutter); width: 44px; height: 44px; color: var(--cream); }
 .mm-foot { margin-top: 3rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--cream-dim); }
 
@@ -604,6 +656,111 @@ section { position: relative; }
 }
 
 /* ============================================================
+   RESUME LANGUAGE PICKER
+   ============================================================ */
+.rp-overlay {
+  position: fixed; inset: 0; z-index: 1200;
+  display: grid; place-items: center;
+  padding: var(--gutter);
+  background: rgba(8,8,8,0.72);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.4s var(--ease-out), visibility 0.4s var(--ease-out);
+}
+.rp-overlay.open { opacity: 1; visibility: visible; }
+
+.rp-panel {
+  position: relative;
+  width: 100%; max-width: 560px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.55s var(--ease-out), opacity 0.45s var(--ease-out);
+}
+.rp-overlay.open .rp-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+.rp-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: 0.75rem;
+}
+.rp-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+.rp-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.75rem, 4.5vw, 2.4rem); line-height: 0.95;
+  letter-spacing: -0.03em; margin: 0.85rem 0 0.35rem;
+}
+.rp-sub { color: var(--cream-dim); font-size: 0.95rem; max-width: 38ch; }
+
+.rp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1.75rem; }
+
+.rp-card {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem;
+  padding: 1.4rem 1.4rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.35s var(--ease), transform 0.35s var(--ease-out);
+}
+.rp-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: var(--cream);
+  transform: translateY(101%);
+  transition: transform 0.5s var(--ease);
+}
+.rp-card:hover { border-color: var(--cream); transform: translateY(-3px); }
+.rp-card:hover::before { transform: translateY(0); }
+.rp-card > * { position: relative; z-index: 1; transition: color 0.4s var(--ease); }
+.rp-card:hover .rp-flag,
+.rp-card:hover .rp-lang,
+.rp-card:hover .rp-note,
+.rp-card:hover .rp-go { color: #0a0a0a; }
+.rp-card:hover .rp-flag { border-color: rgba(10,10,10,0.18); }
+
+.rp-flag {
+  font-family: var(--font-mono); font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.18em; color: var(--accent);
+  border: 1px solid var(--line); border-radius: 100px;
+  padding: 0.25rem 0.6rem;
+}
+.rp-lang { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; letter-spacing: -0.02em; }
+.rp-note { color: var(--cream-mute); font-size: 0.8rem; }
+.rp-go {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--cream-dim); margin-top: 0.25rem;
+}
+.rp-go svg { width: 13px; height: 13px; }
+
+.rp-close {
+  position: absolute; top: 1.1rem; right: 1.1rem;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); color: var(--cream-dim);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.rp-close:hover { color: var(--cream); border-color: var(--cream); transform: rotate(90deg); }
+.rp-close svg { width: 16px; height: 16px; }
+
+@media (max-width: 480px) {
+  .rp-options { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rp-overlay, .rp-panel, .rp-card, .rp-card::before, .rp-close { transition: opacity 0.2s linear; }
+  .rp-panel { transform: none; }
+  .rp-card:hover { transform: none; }
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1024px) {
@@ -613,6 +770,10 @@ section { position: relative; }
 @media (max-width: 760px) {
   .nav-links, .nav-time { display: none; }
   .burger { display: grid; place-items: center; }
+  .hero-foot { flex-direction: column; align-items: flex-start; }
+  .hero-stats { grid-template-columns: 1fr; gap: 1.1rem; padding-top: 1.5rem; }
+  .hero-stats li { flex-direction: row; align-items: baseline; gap: 0.8rem; }
+  .hero-stats b { font-size: 1.4rem; }
   .skill-row { grid-template-columns: 1fr; gap: 0.8rem; }
   .skill-row:hover .cat { transform: none; }
   .scroll-cue { display: none; }
@@ -670,11 +831,11 @@ section { position: relative; }
 <nav class="nav" id="nav">
   <a href="#top" class="brand">MOATASSIME SAAD</a>
   <div class="nav-links">
-    <a href="#about"><span data-t="About">About</span></a>
-    <a href="#work"><span data-t="Work">Work</span></a>
-    <a href="#skills"><span data-t="Skills">Skills</span></a>
-    <a href="#contact"><span data-t="Contact">Contact</span></a>
-    <a href="resume.pdf" target="_blank" rel="noopener"><span data-t="Resume">Resume</span></a>
+    <a href="#about" data-magnetic-soft><i class="roll"><span data-t="About">About</span></i></a>
+    <a href="#work" data-magnetic-soft><i class="roll"><span data-t="Work">Work</span></i></a>
+    <a href="#skills" data-magnetic-soft><i class="roll"><span data-t="Skills">Skills</span></i></a>
+    <a href="#contact" data-magnetic-soft><i class="roll"><span data-t="Contact">Contact</span></i></a>
+    <button type="button" data-resume data-magnetic-soft aria-haspopup="dialog"><i class="roll"><span data-t="Resume">Resume</span></i></button>
   </div>
   <span class="nav-time" id="clock">—</span>
   <button class="burger" id="burger" aria-label="Open menu">
@@ -691,7 +852,7 @@ section { position: relative; }
   <a href="#work" class="mm-item">Work</a>
   <a href="#skills" class="mm-item">Skills</a>
   <a href="#contact" class="mm-item">Contact</a>
-  <a href="resume.pdf" target="_blank" rel="noopener" class="mm-item">Resume</a>
+  <button type="button" data-resume class="mm-item" aria-haspopup="dialog">Resume</button>
   <div class="mm-foot mm-item">saad@moatassime.com<br>+212 6 64 50 10 81</div>
 </div>
 
@@ -700,32 +861,45 @@ section { position: relative; }
 <!-- HERO -->
 <header class="hero wrap">
   <canvas class="hero-net" id="heroNet" aria-hidden="true"></canvas>
-  <div class="hero-top">
-    <span class="hero-avail"><span class="live-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>Available for senior &amp; freelance roles</span>
+
+  <div class="hero-meta">
+    <span class="hero-avail" data-fade><span class="live-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>Available for new projects</span>
+    <span class="hero-loc" data-fade>Morocco · <span id="clock2">—</span></span>
   </div>
 
-  <h1 aria-label="Senior Full Stack Developer">
-    <span class="row"><span class="clip" data-split>Senior</span></span>
-    <span class="row"><span class="clip" data-split>Full Stack</span></span>
-    <span class="row"><span class="clip"><em data-split>Developer</em></span></span>
-  </h1>
+  <div class="hero-main">
+    <p class="hero-eyebrow" data-fade><span class="he-bar" aria-hidden="true"></span>Full-Stack Engineer</p>
 
-  <div class="hero-bottom">
-    <p class="hero-lead" data-fade>
-      I build <b>scalable, real-time web applications</b> across the <b>full stack</b> — specializing in pluggable automation engines, real-time communication, and robust API designs.
-    </p>
-    <div class="hero-cta" data-fade>
-      <a href="#contact" class="btn btn-fill" data-magnetic data-cursor>
-        <span>Start a project</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <a href="#work" class="btn" data-magnetic data-cursor><span>View work</span></a>
-      <a href="resume.pdf" class="btn" target="_blank" rel="noopener" data-magnetic data-cursor>
-        <span>Resume</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>
-      </a>
+    <h1 class="hero-name" aria-label="Moatassime Saad">
+      <span class="row"><span class="clip" data-split>Moatassime</span></span>
+      <span class="row name2-row">
+        <span class="clip" data-split>Saad</span><em class="dot" data-split>.</em>
+      </span>
+    </h1>
+
+    <div class="hero-foot">
+      <p class="hero-lead" data-fade>
+        I design and ship <b>scalable, real-time web applications</b> end to end — from automation engines and APIs to the interfaces people actually use.
+      </p>
+      <div class="hero-cta" data-fade>
+        <a href="#contact" class="btn btn-fill" data-magnetic data-cursor>
+          <span>Start a project</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#work" class="btn" data-magnetic data-cursor><span>View work</span></a>
+        <button type="button" data-resume class="btn" data-magnetic data-cursor aria-haspopup="dialog">
+          <span>Resume</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>
+        </button>
+      </div>
     </div>
   </div>
+
+  <ul class="hero-stats" aria-label="At a glance">
+    <li data-fade><b>4+</b><span>Years shipping production</span></li>
+    <li data-fade><b>Full Stack</b><span>Frontend · Backend · APIs</span></li>
+    <li data-fade><b>Nuxt · Laravel</b><span>Core stack</span></li>
+  </ul>
 
   <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="ln"></span></div>
 </header>
@@ -941,6 +1115,36 @@ section { position: relative; }
   </div>
 </footer>
 
+<!-- RESUME LANGUAGE PICKER -->
+<div class="rp-overlay" id="resumePicker" role="dialog" aria-modal="true" aria-labelledby="rpTitle" hidden>
+  <div class="rp-panel" role="document">
+    <button type="button" class="rp-close" id="rpClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <span class="rp-eyebrow">Resume</span>
+    <h2 class="rp-title" id="rpTitle">Pick a language</h2>
+    <p class="rp-sub">Choose the version you'd like to open. Both download as the same file.</p>
+    <div class="rp-options">
+      <button type="button" class="rp-card" data-resume-file="MOATASSIME_SAAD_RESUME_EN.pdf">
+        <span class="rp-flag">EN</span>
+        <span class="rp-lang">English</span>
+        <span class="rp-note">Original version</span>
+        <span class="rp-go">Open
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+      <button type="button" class="rp-card" data-resume-file="MOATASSIME_SAAD_RESUME_FR.pdf">
+        <span class="rp-flag">FR</span>
+        <span class="rp-lang">Français</span>
+        <span class="rp-note">Version française</span>
+        <span class="rp-go">Ouvrir
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
@@ -956,11 +1160,14 @@ section { position: relative; }
   /* ---------- Year + clock ---------- */
   document.getElementById("yr").textContent = new Date().getFullYear();
   var clock = document.getElementById("clock");
+  var clock2 = document.getElementById("clock2");
   function tick() {
+    var t = "";
     try {
-      var t = new Date().toLocaleTimeString("en-GB", { timeZone: "Africa/Casablanca", hour: "2-digit", minute: "2-digit" });
-      clock.textContent = t;
-    } catch (e) { clock.textContent = ""; }
+      t = new Date().toLocaleTimeString("en-GB", { timeZone: "Africa/Casablanca", hour: "2-digit", minute: "2-digit" });
+    } catch (e) { t = ""; }
+    if (clock) clock.textContent = t;
+    if (clock2) clock2.textContent = t ? t + " GMT" : "";
   }
   tick(); setInterval(tick, 10000);
 
@@ -1048,22 +1255,62 @@ section { position: relative; }
     });
   });
 
-  /* ---------- Pre-set initial states ---------- */
-  var heroChars = [];
-  document.querySelectorAll(".hero h1 [data-split]").forEach(function (el) {
-    heroChars = heroChars.concat(Array.prototype.slice.call(splitChars(el)));
-  });
-  gsap.set(heroChars, { yPercent: 115 });
-  gsap.set("[data-fade]", { y: 30, opacity: 0 });
+  /* ---------- Pre-set initial states (name-first hero) ---------- */
+  var nameLine1 = splitChars(document.querySelector(".hero-name .row:first-child [data-split]"));
+  var nameLine2 = splitChars(document.querySelector(".hero-name .name2-row .clip[data-split]"));
+  var nameDot   = document.querySelector(".hero-name .dot");
+  nameLine1 = Array.prototype.slice.call(nameLine1);
+  nameLine2 = Array.prototype.slice.call(nameLine2);
+  var heroChars = nameLine1.concat(nameLine2);
+
+  gsap.set(nameLine1, { yPercent: 120 });
+  gsap.set(nameLine2, { yPercent: 120 });
+  if (nameDot) gsap.set(nameDot, { scale: 0, opacity: 0, transformOrigin: "50% 80%" });
+  gsap.set("[data-fade]", { y: 26, opacity: 0 });
 
   /* ---------- Intro Animation ---------- */
   function runIntro() {
-    var tl = gsap.timeline();
-    tl.to(heroChars, { yPercent: 0, duration: 1.1, ease: "expo.out", stagger: 0.04 }, 0.1)
-      .to(".hero [data-fade]", { y: 0, opacity: 1, duration: 0.9, ease: "power3.out", stagger: 0.08 }, 0.5);
+    var tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+    // eyebrow + meta first
+    tl.to(".hero-meta [data-fade], .hero-eyebrow", {
+      y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.06
+    }, 0.1);
+
+    // "Moatassime" rises, letter by letter
+    tl.to(nameLine1, {
+      yPercent: 0, duration: 1.15, stagger: { each: 0.035, from: "start" }
+    }, 0.35);
+
+    // "Saad" rises just after, slightly tighter
+    tl.to(nameLine2, {
+      yPercent: 0, duration: 1.1, stagger: { each: 0.04, from: "start" }
+    }, 0.6);
+
+    // the accent serif dot pops in with a little bounce
+    if (nameDot) tl.to(nameDot, {
+      scale: 1, opacity: 1, duration: 0.7, ease: "back.out(2.4)"
+    }, 1.15);
+
+    // lead, CTAs, and the stat strip fade up last
+    tl.to(".hero-foot [data-fade], .hero-stats [data-fade]", {
+      y: 0, opacity: 1, duration: 0.85, ease: "power3.out", stagger: 0.07
+    }, 1.0);
+
   }
 
   runIntro();
+
+  /* Failsafe driven by the browser clock (not the GSAP ticker): if the
+     timeline ever stalls, force the hero to its end state so the name can
+     never stay stuck off-screen. */
+  setTimeout(function () {
+    var stuck = heroChars.some(function (c) { return Math.abs(gsap.getProperty(c, "yPercent")) > 1; });
+    if (!stuck) return;
+    gsap.set([nameLine1, nameLine2], { yPercent: 0, clearProps: "transform" });
+    if (nameDot) gsap.set(nameDot, { scale: 1, opacity: 1, clearProps: "transform" });
+    gsap.set(".hero [data-fade], .hero-eyebrow", { y: 0, opacity: 1 });
+  }, 2600);
   window.ScrollTrigger.refresh();
 
   /* ---------- Generic fade-up reveals (non-hero) ---------- */
@@ -1230,6 +1477,43 @@ section { position: relative; }
       }
       window.addEventListener("mousemove", onMove);
     });
+
+    /* Soft magnetic: like the email magnet but gentle — it stays put until
+       the cursor gets really close, then eases toward it just a little. */
+    document.querySelectorAll("[data-magnetic-soft]").forEach(function (el) {
+      var ZONE = 64;        // activation radius from the element box (small = only when close)
+      var STR  = 0.22;      // pull strength (small = soft)
+      var MAXD = 9;         // px cap so it never lunges far
+      var active = false;
+      function onMove(e) {
+        var r = el.getBoundingClientRect();
+        var ox = gsap.getProperty(el, "x") || 0;
+        var oy = gsap.getProperty(el, "y") || 0;
+        var left = r.left - ox, top = r.top - oy;
+        var cx = left + r.width / 2;
+        var cy = top + r.height / 2;
+        // distance from the element BOX (0 when inside)
+        var ddx = Math.max(left - e.clientX, 0, e.clientX - (left + r.width));
+        var ddy = Math.max(top - e.clientY, 0, e.clientY - (top + r.height));
+        var edgeDist = Math.hypot(ddx, ddy);
+        if (edgeDist < ZONE) {
+          active = true;
+          // ease in smoothly: 0 at the zone edge → 1 right at the element,
+          // squared so it stays nearly still until the cursor is really close
+          var t = 1 - edgeDist / ZONE;
+          var pull = STR * t * t;
+          var dx = (e.clientX - cx) * pull;
+          var dy = (e.clientY - cy) * pull;
+          dx = Math.max(-MAXD, Math.min(MAXD, dx));
+          dy = Math.max(-MAXD, Math.min(MAXD, dy));
+          gsap.to(el, { x: dx, y: dy, duration: 0.5, ease: "power2.out" });
+        } else if (active) {
+          active = false;
+          gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1,0.5)" });
+        }
+      }
+      window.addEventListener("mousemove", onMove);
+    });
   }
 
   /* ---------- Hero interactive node network (follows cursor) ---------- */
@@ -1380,6 +1664,72 @@ section { position: relative; }
   function closeMenu() { var m = document.getElementById("mobileMenu"); if (m) m.classList.remove("open"); }
   function initClockOnly() {}
   initMenu();
+
+  /* ---------- Resume language picker ---------- */
+  function initResumePicker() {
+    var overlay = document.getElementById("resumePicker");
+    if (!overlay) return;
+    var panel = overlay.querySelector(".rp-panel");
+    var lastTrigger = null;
+
+    function open(trigger) {
+      lastTrigger = trigger || null;
+      overlay.hidden = false;
+      /* force reflow so the transition runs from hidden state */
+      void overlay.offsetWidth;
+      overlay.classList.add("open");
+      if (lenis) lenis.stop();
+      document.addEventListener("keydown", onKey);
+      var first = overlay.querySelector(".rp-card");
+      if (first) first.focus();
+    }
+    function close() {
+      overlay.classList.remove("open");
+      if (lenis) lenis.start();
+      document.removeEventListener("keydown", onKey);
+      var done = function () {
+        overlay.hidden = true;
+        overlay.removeEventListener("transitionend", done);
+      };
+      overlay.addEventListener("transitionend", done);
+      if (reduced) done();
+      if (lastTrigger && lastTrigger.focus) lastTrigger.focus();
+    }
+    function onKey(e) { if (e.key === "Escape") close(); }
+
+    /* Triggers — every element marked data-resume opens the picker */
+    document.querySelectorAll("[data-resume]").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        closeMenu();
+        open(btn);
+      });
+    });
+
+    /* Language choices */
+    overlay.querySelectorAll("[data-resume-file]").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var file = card.getAttribute("data-resume-file");
+        var a = document.createElement("a");
+        a.href = file;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.setAttribute("download", file);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        close();
+      });
+    });
+
+    /* Close interactions */
+    var closeBtn = document.getElementById("rpClose");
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    overlay.addEventListener("click", function (e) {
+      if (!panel.contains(e.target)) close();
+    });
+  }
+  initResumePicker();
 
   /* refresh after fonts load to fix split metrics */
   if (document.fonts && document.fonts.ready) {
