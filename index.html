@@ -1706,18 +1706,11 @@ section { position: relative; }
       });
     });
 
-    /* Language choices */
+    /* Language choices — open the PDF in a new tab (don't force a download) */
     overlay.querySelectorAll("[data-resume-file]").forEach(function (card) {
       card.addEventListener("click", function () {
         var file = card.getAttribute("data-resume-file");
-        var a = document.createElement("a");
-        a.href = file;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.setAttribute("download", file);
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        window.open(file, "_blank", "noopener");
         close();
       });
     });
